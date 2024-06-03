@@ -1471,7 +1471,7 @@
 
 "@fusionauth/angular-sdk@^1.0.2":
   version "1.0.2"
-  resolved "https://registry.npmjs.org/@fusionauth/angular-sdk/-/angular-sdk-1.0.2.tgz"
+  resolved "https://registry.yarnpkg.com/@fusionauth/angular-sdk/-/angular-sdk-1.0.2.tgz#aae971c3e1db5ef2c33c51ad028d47423f7e8186"
   integrity sha512-YG99uAH0IZWtsmfc34cKjlpgbiQeddWdyyCGvMZnlsVNrYUOTRlKCx0Jhb53VWi+oaK3loA1/H69pquE8+pu+g==
   dependencies:
     tslib "^2.3.0"

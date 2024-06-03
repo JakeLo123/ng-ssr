@@ -1,4 +1,16 @@
-<h1>Hello</h1>
-<button (click)="printCookie()">Cookie button</button>
+@if (isLoggedIn) {
+<div class="h-row">
+  <p class="header-email">
+    @if (isGettingUserInfo) {
+    {{ "Loading..." }}
+    } @else {
+    {{ userInfo?.email }}
+    }
+  </p>
+  <a class="button-lg" (click)="logout()" style="cursor: pointer"> Logout </a>
+</div>
+} @else {
+<a class="button-lg" (click)="login()" style="cursor: pointer"> Login </a>
+}
 
 <router-outlet></router-outlet>

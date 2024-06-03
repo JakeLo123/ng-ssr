@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { DocumentService } from './document-service/document.service';
+import { UserInfo, FusionAuthService } from '@fusionauth/angular-sdk';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,13 +9,36 @@ import { DocumentService } from './document-service/document.service';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  private service: DocumentService = inject(DocumentService);
+  private fusionAuthService: FusionAuthService = inject(FusionAuthService);
+
+  isLoggedIn: boolean = this.fusionAuthService.isLoggedIn();
+  userInfo: UserInfo | null = null;
+  isGettingUserInfo: boolean = false;
+  subscription?: Subscription;
 
   ngOnInit(): void {
-    this.printCookie();
+    if (this.isLoggedIn) {
+      this.subscription = this.fusionAuthService
+        .getUserInfoObservable({
+          onBegin: () => (this.isGettingUserInfo = true),
+          onDone: () => (this.isGettingUserInfo = false),
+        })
+        .subscribe({
+          next: (userInfo) => (this.userInfo = userInfo),
+          error: (error) => console.error(error),
+        });
+    }
   }
 
-  printCookie() {
-    console.log('🍪', this.service.myCookie);
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
+
+  logout() {
+    this.fusionAuthService.logout();
+  }
+
+  login() {
+    this.fusionAuthService.startLogin();
   }
 }
